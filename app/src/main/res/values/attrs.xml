@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="keyboard">
+        <attr name="keyboard_line" format="integer"/>
+        <attr name="keyboard_row" format="integer"/>
+    </declare-styleable>
+</resources>
