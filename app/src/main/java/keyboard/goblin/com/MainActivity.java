@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
         keyboard.setOnButtonEventListener(new MainKeyboardLayout.OnButtonEventListener() {
             @Override
-            public void onTextOutput(View view, char text, boolean isDel) {
+            public void onTextOutput(View view, String text, boolean isDel) {
                 if (!isDel){
                     string.append(text);
                 }else {

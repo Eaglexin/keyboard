@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.AppCompatButton;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -48,18 +49,16 @@ public class StringButton extends AppCompatButton {
     }
 
     private void outputText() {
-        String text = getText().toString().trim();
-            char[] textChar = text.toCharArray();
-            if (textChar.length == 1) {
-                if (mOnButtonEventListener != null) {
-                    mOnButtonEventListener.onTextOutput(this, textChar[0], false);
-                }
-            } else {
-                if (mOnButtonEventListener != null) {
-                    mOnButtonEventListener.onTextOutput(this, textChar[0], true);
-                }
+        String text = getText().toString();
+        if (TextUtils.isEmpty(text) || text.length() == 1) {
+            if (mOnButtonEventListener != null) {
+                mOnButtonEventListener.onTextOutput(this, text, false);
             }
-
+        } else {
+            if (mOnButtonEventListener != null) {
+                mOnButtonEventListener.onTextOutput(this, text, true);
+            }
+        }
     }
 
     public StringButton(Context context, AttributeSet attrs) {

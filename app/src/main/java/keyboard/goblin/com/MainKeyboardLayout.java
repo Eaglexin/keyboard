@@ -26,7 +26,7 @@ public class MainKeyboardLayout extends ViewGroup {
     }
 
     interface OnButtonEventListener {
-        void onTextOutput(View view, char text, boolean isDel);
+        void onTextOutput(View view, String text, boolean isDel);
 
         void onClick(View view);
     }
@@ -75,7 +75,7 @@ public class MainKeyboardLayout extends ViewGroup {
 
     private OnButtonEventListener mOnButtonEventListener = new OnButtonEventListener() {
         @Override
-        public void onTextOutput(View view, char text, boolean isAppend) {
+        public void onTextOutput(View view, String text, boolean isAppend) {
             if (mOnKeyboardButtonEventListener != null) {
                 mOnKeyboardButtonEventListener.onTextOutput(view, text, isAppend);
             }
