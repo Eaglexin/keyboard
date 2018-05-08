@@ -20,7 +20,6 @@ public class MainKeyboardLayout extends ViewGroup {
     private int mIconIndexCount = 4;
     private OnButtonEventListener mOnKeyboardButtonEventListener;
 
-
     public void setOnButtonEventListener(OnButtonEventListener listener) {
         mOnKeyboardButtonEventListener = listener;
     }
@@ -50,10 +49,6 @@ public class MainKeyboardLayout extends ViewGroup {
         arr2[9] = "" ;
         arr2[10] = s ;
         arr2[11] = "del" ;
-
-        for (int i = 0; i < arr2.length; i++) {
-            Log.i(TAG, "disorderArray: "  +arr2[i]);
-        }
         return arr2;
     }
 
@@ -90,30 +85,19 @@ public class MainKeyboardLayout extends ViewGroup {
     };
 
     private void init(Context context) {
+
+        Log.i(TAG, "init: " + getMeasuredHeight());
         for (int i = 0; i < NUMBER_PANEL.length; i++) {
             addView(new StringButton(context, NUMBER_PANEL[i], mOnButtonEventListener), i);
         }
-        setUnlockOrQrCodeEnable();
     }
 
-    public void setUnlockOrQrCodeEnable() {
-        int index = 0;
-        mIconIndexCount = index;
-        if (index == 1) {
-            setBackgroundResource(R.drawable.app_img_keyboard_background_3);
-        } else if (index == 2) {
-            setBackgroundResource(R.drawable.app_img_keyboard_background_2);
-        } else if (index == 3) {
-            setBackgroundResource(R.drawable.app_img_keyboard_background_1);
-        }
-    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
-
         int itemWidth = widthSize / COLUMN - MARGIN_LR * 2;
         int itemHeight = itemWidth / 3  - MARGIN_TB * 2;
         for (int i = 0; i < NUMBER_PANEL.length; i++) {
@@ -122,19 +106,19 @@ public class MainKeyboardLayout extends ViewGroup {
                     (itemWidth, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec
                     (itemHeight, MeasureSpec.EXACTLY));
         }
-        if (mIconIndexCount == 1) {
-            itemHeight = itemHeight * 2 + MARGIN_TB + LINE_TOP;
-        }
-        for (int i = 0; i < mIconIndexCount; i++) {
-            View child = getChildAt(12 + i);
-            if (i == mIconIndexCount && mIconIndexCount == 2) {
-                itemHeight = itemHeight * 2 + MARGIN_TB + LINE_TOP;
-            }
-            child.measure(MeasureSpec.makeMeasureSpec
-                    (itemWidth, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec
-                    (itemHeight, MeasureSpec.EXACTLY));
-        }
-        setMeasuredDimension(widthSize, heightSize);
+//        if (mIconIndexCount == 1) {
+//            itemHeight = itemHeight * 2 + MARGIN_TB + LINE_TOP;
+//        }
+//        for (int i = 0; i < mIconIndexCount; i++) {
+//            View child = getChildAt(12 + i);
+//            if (i == mIconIndexCount && mIconIndexCount == 2) {
+//                itemHeight = itemHeight * 2 + MARGIN_TB + LINE_TOP;
+//            }
+//            child.measure(MeasureSpec.makeMeasureSpec
+//                    (itemWidth, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec
+//                    (itemHeight, MeasureSpec.EXACTLY));
+//        }
+        setMeasuredDimension(widthSize, countHeightKeyBoard(itemWidth / 3));
     }
 
     @Override
@@ -153,5 +137,13 @@ public class MainKeyboardLayout extends ViewGroup {
             int top = line * itemHeight + MARGIN_TB + LINE_TOP;
             view.layout(left, top, left + view.getMeasuredWidth(), top + view.getMeasuredHeight());
         }
+
+//        setMeasuredDimension(getMeasuredWidth(),countHeightKeyBoard(itemHeight));
+    }
+
+    // 计算键盘有多少行
+    private int countHeightKeyBoard(int itemHeight){
+        int line  =  (int) Math.floor(NUMBER_PANEL.length / COLUMN);
+        return itemHeight * line + (line-1) * LINE_TOP;
     }
 }
